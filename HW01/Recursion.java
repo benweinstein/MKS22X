@@ -1,7 +1,7 @@
 public class Recursion{
     //required name function
     public static String name(){
-	return "Weinstein,Ben";
+	return "Weinstein,Benjamin";
     }
     
     //required final function
