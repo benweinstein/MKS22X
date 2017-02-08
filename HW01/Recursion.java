@@ -7,8 +7,14 @@ public class Recursion{
     //required final function
     public static double sqrt(double n){
 	if(n < 0){
-	    throw new IllegalArgumentException();
+	    throw new IllegalArgumentException("Non-negative values only, please!");
 	}
+	
+	//adding this in because it was messing up with 0
+	if(n == 0){
+	    return 0;
+	}
+	
 	return guessRoot(n, 1);
     }
 
@@ -28,6 +34,15 @@ public class Recursion{
 	double betterGuess = (n / guess + guess) / 2;
 	return guessRoot(n, betterGuess);
     }
-    
+
+    //TESTS
+    public static void main(String[] args){
+	System.out.println(sqrt(4));
+	System.out.println(sqrt(5));
+	System.out.println(sqrt(100));
+	System.out.println(sqrt(0));
+	System.out.println(sqrt(-1));
+
+    }
 }
 	
