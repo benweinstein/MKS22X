@@ -20,7 +20,44 @@ public class QueenBoard{
     }
 
     private boolean solveH(int col){
+	for(int row = 0; row < board.length; row++){
+	    //base case for end of the board
+	    if(col >= board.length){
+		return true;
+	    }
+	    //other cases
+	    if(isQueenable(row, col)){
+		placeQueenHere(row, col);
+		if(solveH(col + 1)){
+		    return true;
+		}
+		else{
+		    deleteQueenHere(row,col);
+		}
+	    }
+	}
 	return false;
+    }
+
+    //helpers for solveH()
+    //private boolean isQueenable(int row, int col){}
+    //have to check diagonals, row, and col
+    private boolean isQueenable(int row, int col){
+	return safeRow(row) && safeCol(col) && safeDiagonals(row, col);
+    }
+    //the helper's helpers:
+    //private boolean safeRow(int row){}
+    //private boolean safeCol(int col){}
+    //private boolean safeDiagonals(int row, int col){}
+
+    //private void placeQueenHere(int row, int col){}
+    private void placeQueenHere(int row, int col){
+	board[row][col] = -1;
+    }
+
+    //private void deleteQueenHere(int row, int col){}
+    private void deleteQueenHere(int row, int col){
+	board[row][col] = 0;
     }
 
     /**
