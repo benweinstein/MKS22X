@@ -4,6 +4,7 @@ public class QueenBoard{
 
     public QueenBoard(int size){
 	board = new int[size][size];
+	solutionCount = -1;
     }
 
     /**
@@ -138,10 +139,43 @@ public class QueenBoard{
      *Uses countH
      */
     public void countSolutions(){
-        countH();
+        solutionCount = 0; //necessary if called multiple times on same board
+	
+	countH(0);
+
+	//should I erase the board at the end, too? Sure, why not?
+	for(int r = 0; r < board.length; r++){
+	    for(int c = 0; c < board.length; c++){
+		board[r][c] = 0;
+	    }
+	}
     }
     
-    private boolean countH(){
+    private boolean countH(int col){
+	//so 2x2, 3x3 boards have (technically) 0 solutions
+	if(board.length == 2 || board.length == 3){
+	    return false;
+	}
+
+	//meat of the problem
+	for(int row = 0; row < board.length; row++){
+	    //base case for end of the board
+	    //NEEDS TO ACCOUNT FOR CHECKING AMOUNT OF QUEENS??? idts anymore
+	    if(col >= board.length){
+		return true;
+	    }
+	    //other cases
+	    if(isQueenable(row, col)){
+		placeQueenHere(row, col);
+		if(countH(col + 1)){
+		    solutionCount++;
+		    deleteQueenHere(row, col);
+		}
+		else{
+		    deleteQueenHere(row, col);
+		}
+	    }
+	}
 	return false;
     }
     
@@ -149,18 +183,14 @@ public class QueenBoard{
      *@return the number of solutions found, or -1 if the board was never solved.
      *The board should be reset after this is run.
      */
-    public int getCount(){
+    public int getSolutionCount(){
 	//blank the board
 	for(int r = 0; r < board.length; r++){
 	    for(int c = 0; c < board.length; c++){
 		board[r][c] = 0;
 	    }
 	}
-	
-	//return stuff
-	if(solutionCount == 0){
-	    return -1;
-	}
+
 	return solutionCount;
     }
 
@@ -188,9 +218,11 @@ public class QueenBoard{
 
     //TESTS
     public static void main(String[] args){
-	QueenBoard n = new QueenBoard(4);
+	QueenBoard n = new QueenBoard(3);
 	System.out.println(n);
 	n.solve();
 	System.out.println(n);
+	n.countSolutions();
+	System.out.println(n.getSolutionCount());
     }
 }
