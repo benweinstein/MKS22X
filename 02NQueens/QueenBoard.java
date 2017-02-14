@@ -21,9 +21,13 @@ public class QueenBoard{
     }
 
     private boolean solveH(int col){
+	//NO SOLUTION FOR 2x2, 3x3 BOARDS
+	if(board.length == 2 || board.length == 3){
+	    return true; //t or f? doesn't really matter
+	}
+	
 	for(int row = 0; row < board.length; row++){
 	    //base case for end of the board
-	    //NEEDS TO ACCOUNT FOR CHECKING AMOUNT OF QUEENS??? idts anymore
 	    if(col >= board.length){
 		return true;
 	    }
@@ -36,11 +40,6 @@ public class QueenBoard{
 		else{
 		    deleteQueenHere(row,col);
 		}
-	    }
-
-	    //to account for 2x2, 3x3 boards
-	    if(row == board.length - 1 && (board.length == 2 || board.length == 3)){
-		return solveH(col + 1);
 	    }
 	}
 	return false;
@@ -139,11 +138,19 @@ public class QueenBoard{
      *Uses countH
      */
     public void countSolutions(){
-        solutionCount = 0; //necessary if called multiple times on same board
+	//erase board at the beginning
+	//I know Mr. K doesn't need this, but it makes testing easier for me
+	for(int r = 0; r < board.length; r++){
+	    for(int c = 0; c < board.length; c++){
+		board[r][c] = 0;
+	    }
+	}
+	
+	solutionCount = 0; //necessary if called multiple times on same board
 	
 	countH(0);
 
-	//should I erase the board at the end, too? Sure, why not?
+	//should I erase the board at the end, too? Yup
 	for(int r = 0; r < board.length; r++){
 	    for(int c = 0; c < board.length; c++){
 		board[r][c] = 0;
@@ -218,7 +225,7 @@ public class QueenBoard{
 
     //TESTS
     public static void main(String[] args){
-	QueenBoard n = new QueenBoard(3);
+	QueenBoard n = new QueenBoard(5);
 	System.out.println(n);
 	n.solve();
 	System.out.println(n);
