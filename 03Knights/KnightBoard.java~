@@ -1,0 +1,12 @@
+public class KnightBoard{
+    private int[] board;
+
+    public KnightBoard(int startingRows, int startingCols){
+
+    }
+
+    public String toString(){
+	String ans = "";
+
+	return ans;
+    }
