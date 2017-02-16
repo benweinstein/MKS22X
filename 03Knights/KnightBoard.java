@@ -1,35 +1,33 @@
 public class KnightBoard{
     private int[][] board;
 
-    private static int[] movesRow;
-    private static int[] movesCol;
+    // private static int[] movesRow;
+    // private static int[] movesCol;
 
     public KnightBoard(int startingRows, int startingCols){
 	board = new int[startingRows][startingCols];
     }
 
     public void solve(){
-	solveH(0, 0, 0);
+	solveH(0, 0, 1);
     }
 
     private boolean solveH(int row, int col, int numKnight){
 	//base case
-	if(numKnight >= row * col){
+	if(numKnight > row * col){
 	    return true;
 	}
 	if(board[row][col] == 0){ //if there's no knight here...
-	    placeKnightHere(row, col, numKnight + 1); //place one
-	    //FOR 1x1 BOARDS, DOES IT NEED TO BE numKnight + 1???
-	    //AND THEN START OUT numKnight AT 0???
-
+	    placeKnightHere(row, col, numKnight); //place one
+	  
 	    //generate where the next knight could be placed 
-	    movesRow = generateRows(row);
-	    movesCol = generateCols(col);
+	    int[] movesRow = generateRows(row);
+	    int[] movesCol = generateCols(col);
 	    
 	    //try out these spots
 	    for(int i = 0; i < 8; i++){
 		if(isValidSpot(movesRow[i], movesCol[i])){//if one of them works
-		    //move on to the next recursive call!!!
+		    //move on to the next recursive call
 		    return solveH(movesRow[i], movesCol[i], numKnight + 1);
 		}
 	    }
@@ -75,10 +73,10 @@ public class KnightBoard{
 	for(int r = 0; r < board.length; r++){
 	    for(int c = 0; c < board[r].length; c++){
 		if(board[r][c] == 0){
-		    ans += "   ";
+		    ans += "__ ";
 		}
 		else if(board[r][c] < 10){
-		    ans += " " + board[r][c] + " ";
+		    ans += "_" + board[r][c] + " ";
 		}
 		else{
 		    ans += board[r][c] + " ";
@@ -97,7 +95,7 @@ public class KnightBoard{
     public static void main(String[] args){
 	KnightBoard b = new KnightBoard(5, 5);
 	System.out.println(b);
-	b.solve();
+	System.out.println(b.solveH(0,0,1));
 	System.out.println(b);
     }
 }
