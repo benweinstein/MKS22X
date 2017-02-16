@@ -14,29 +14,33 @@ public class KnightBoard{
 
     private boolean solveH(int row, int col, int numKnight){
 	//base case
-	if(numKnight > row * col){
+	if(numKnight > board.length * board[0].length){
 	    return true;
 	}
-	if(board[row][col] == 0){ //if there's no knight here...
-	    placeKnightHere(row, col, numKnight); //place one
-	  
-	    //generate where the next knight could be placed 
-	    int[] movesRow = generateRows(row);
-	    int[] movesCol = generateCols(col);
-	    
-	    //try out these spots
-	    for(int i = 0; i < 8; i++){
-		if(isValidSpot(movesRow[i], movesCol[i])){//if one of them works
-		    //move on to the next recursive call
-		    return solveH(movesRow[i], movesCol[i], numKnight + 1);
-		}
-	    }
-	    
-	    //none of them worked, so delete this knight,
-	    //so end this recursive call
-	    deleteKnightHere(row, col);
+	
+	if(!isValidSpot(row, col)){
+	    return false;
 	}
-	return false;
+	
+	placeKnightHere(row, col, numKnight); //place one
+	
+	//generate where the next knight could be placed 
+	int[] movesRow = generateRows(row);
+	int[] movesCol = generateCols(col);
+	
+	//try out these spots
+	if(!(solveH(movesRow[0], movesCol[0], numKnight + 1) ||
+	     solveH(movesRow[1], movesCol[1], numKnight + 1) ||
+	     solveH(movesRow[2], movesCol[2], numKnight + 1) ||
+	     solveH(movesRow[3], movesCol[3], numKnight + 1) ||
+	     solveH(movesRow[4], movesCol[4], numKnight + 1) ||
+	     solveH(movesRow[5], movesCol[5], numKnight + 1) ||
+	     solveH(movesRow[6], movesCol[6], numKnight + 1) ||
+	     solveH(movesRow[7], movesCol[7], numKnight + 1))){
+	    deleteKnightHere(row, col);
+	    return false;
+	}
+	return true;	
     }
     
     //HELPERS for the helper
