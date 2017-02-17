@@ -1,6 +1,8 @@
 public class KnightBoard{
     private int[][] board;
 
+    //It wasn't working when I used these private static int[]'s
+    //for some reason, so I just decided to instantiate each time 
     // private static int[] movesRow;
     // private static int[] movesCol;
 
@@ -25,7 +27,7 @@ public class KnightBoard{
 	placeKnightHere(row, col, numKnight); //place one
 	
 	//generate where the next knight could be placed 
-	int[] movesRow = generateRows(row);
+        int[] movesRow = generateRows(row);
 	int[] movesCol = generateCols(col);
 	
 	//try out these spots
@@ -77,10 +79,10 @@ public class KnightBoard{
 	for(int r = 0; r < board.length; r++){
 	    for(int c = 0; c < board[r].length; c++){
 		if(board[r][c] == 0){
-		    ans += "__ ";
+		    ans += "   ";
 		}
 		else if(board[r][c] < 10){
-		    ans += "_" + board[r][c] + " ";
+		    ans += " " + board[r][c] + " ";
 		}
 		else{
 		    ans += board[r][c] + " ";
@@ -97,9 +99,13 @@ public class KnightBoard{
 
     //TESTS
     public static void main(String[] args){
-	KnightBoard b = new KnightBoard(5, 5);
+	//what I've noticed:
+	//8x9 takes a while, but 9x8 takes considerably less time
+	//9x9 takes less time (it takes about 3 seconds) than both 8x9 and 9x8
+	//10x10 takes more than a couple minutes (I gave up on waiting for it)
+	KnightBoard b = new KnightBoard(9, 9);
 	System.out.println(b);
-	System.out.println(b.solveH(0,0,1));
+	b.solve();
 	System.out.println(b);
     }
 }
