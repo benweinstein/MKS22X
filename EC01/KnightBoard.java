@@ -10,6 +10,42 @@ public class KnightBoard{
 	board = new int[startingRows][startingCols];
     }
 
+  
+    //NEW (FOR EXTRA CREDIT)
+    public void solveImproved(){
+	newSolveH();
+    }
+    
+    private boolean newSolveH(int row, int col, int numKnight){
+	//base case
+	if(numKnight > board.length * board[0].length){
+	    return true;
+	}
+
+	//check to make sure you're in a valid spot 
+	if(!isValidSpot(row, col)){
+	    return false;
+	}
+	
+	placeKnightHere(row, col, numKnight);
+
+	//generate where the next knight could be placed
+	int[] movesRow = generateRows(row);
+	int[] movesCol = generateCols(col);
+	
+	//SORTING HERE 
+	//PLAN:
+	//create third array of valid num potential moves for each of the eight
+	//moves (movesRow[i], movesCol[i])
+	//Then, run a sort (copied from one of my old sorts) on the third array.
+	//BUT, have it be modified, so that it mimics whatever actions it takes
+	//to sort the third array with the arrays movesRow, movesCol.
+	//This way, they correspond correctly
+	
+	return false;
+    }  
+
+    //OLD
     public void solve(){
 	solveH(0, 0, 1);
     }
