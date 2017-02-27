@@ -12,11 +12,11 @@ public class KnightBoard{
 
   
     //NEW (FOR EXTRA CREDIT)
-    public void solveImproved(){
-	newSolveH();
+    public void solveFast(){
+	fasterSolveH(0, 0, 1);
     }
     
-    private boolean newSolveH(int row, int col, int numKnight){
+    private boolean fasterSolveH(int row, int col, int numKnight){
 	//base case
 	if(numKnight > board.length * board[0].length){
 	    return true;
@@ -33,16 +33,64 @@ public class KnightBoard{
 	int[] movesRow = generateRows(row);
 	int[] movesCol = generateCols(col);
 	
-	//SORTING HERE 
-	//PLAN:
+	//PLAN for optimization:
 	//create third array of valid num potential moves for each of the eight
 	//moves (movesRow[i], movesCol[i])
 	//Then, run a sort (copied from one of my old sorts) on the third array.
 	//BUT, have it be modified, so that it mimics whatever actions it takes
 	//to sort the third array with the arrays movesRow, movesCol.
-	//This way, they correspond correctly
+	//This way, they correspond correctly!!!
+
+	//generate num moves of each array, putting them into a third array
+	int[] numMoves = new int[8];
+	for(int i = 0; i < numMoves.length; i++){
+	    int r = movesRow[i];
+	    int c = movesCol[i];
+	    int[] rAry = generateRows(r);
+	    int[] cAry = generateRows(c);
+	    
+	    for(int j = 0; j < rAry.length; j++){
+		if(isValidSpot(rAry[j], cAry[j])){
+		    numMoves[i] = numMoves[i] + 1;
+		}
+	    }
+	}
 	
-	return false;
+	//using my selection sort:
+	for(int i = 0; i < numMoves.length; i++){
+	    int currentMinIndex = i;
+	    for(int j = i + 1; j < numMoves.length; j++){
+		if(numMoves[i] > numMoves[j]){
+		    currentMinIndex = j;
+		}
+	    }
+	    int helperN = numMoves[i];
+	    int helperR = movesRow[i];
+	    int helperC = movesCol[i];
+	    
+	    numMoves[i] = numMoves[currentMinIndex];
+	    movesRow[i] = movesRow[currentMinIndex];
+	    movesCol[i] = movesCol[currentMinIndex];
+    
+	    numMoves[currentMinIndex] = helperN;
+	    movesRow[currentMinIndex] = helperR;
+	    movesCol[currentMinIndex] = helperC;
+	}
+
+	//now, movesRow and movesCol should be in the correct order (lowest
+	//number of moves first), so we can run the recursive calls now:
+	if(!(fasterSolveH(movesRow[0], movesCol[0], numKnight + 1) ||
+	     fasterSolveH(movesRow[1], movesCol[1], numKnight + 1) ||
+	     fasterSolveH(movesRow[2], movesCol[2], numKnight + 1) ||
+	     fasterSolveH(movesRow[3], movesCol[3], numKnight + 1) ||
+	     fasterSolveH(movesRow[4], movesCol[4], numKnight + 1) ||
+	     fasterSolveH(movesRow[5], movesCol[5], numKnight + 1) ||
+	     fasterSolveH(movesRow[6], movesCol[6], numKnight + 1) ||
+	     fasterSolveH(movesRow[7], movesCol[7], numKnight + 1))){
+	    deleteKnightHere(row, col);
+	    return false;
+	}
+	return true;	
     }  
 
     //OLD
@@ -135,13 +183,9 @@ public class KnightBoard{
 
     //TESTS
     public static void main(String[] args){
-	//what I've noticed:
-	//8x9 takes a while, but 9x8 takes considerably less time
-	//9x9 takes less time (it takes about 3 seconds) than both 8x9 and 9x8
-	//10x10 takes more than a couple minutes (I gave up on waiting for it)
-	KnightBoard b = new KnightBoard(9, 9);
-	System.out.println(b);
-	b.solve();
+	KnightBoard b = new KnightBoard(5,5);
+       	//System.out.println(b);
+       	b.solveFast();
 	System.out.println(b);
     }
 }
