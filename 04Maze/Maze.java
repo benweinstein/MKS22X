@@ -3,38 +3,56 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Maze{
-
-
-    private char[][]maze;
-    private boolean animate;
+    private char[][] maze;
+    private boolean animate = false;
 
     /*Constructor loads a maze text file, and sets animate to false by default.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
       '#' - locations that cannot be moved onto
       ' ' - locations that can be moved onto
       'E' - the location of the goal (exactly 1 per file)
-
       'S' - the location of the start(exactly 1 per file)
-
       2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
       3. When the file is not found OR there is no E or S then: print an error and exit the program.
-
     */
-
     public Maze(String filename){
-        //COMPLETE CONSTRUCTOR
 	String mazeString = "";
+	int numRows = 1;
+	
 	try{
 	    File f = new File(filename);
 	    Scanner mazeScan = new Scanner(f);
+	    
 	    while(mazeScan.hasNextLine()){
 		mazeString += mazeScan.nextLine();
 		mazeString += "\n";
+		numRows++;
 	    }
 	}catch(FileNotFoundException e){
 	    System.exit(1);
 	}
-	System.out.println(mazeString);
+	//System.out.println(mazeString);
+
+	//finding length of a row (numCols)
+	int numCols = 0;
+	
+	while(mazeString.charAt(numCols) != '\n'){
+	    numCols++;
+	}
+	
+	//now we can initialize the maze char[][]!!!
+	maze = new char[numRows][numCols];
+	
+	int i = 0; //for mazeString.charAt(i)
+	for(int r = 0; r < numRows; r++){
+	    for(int c = 0; c < numCols; c++){
+		if(mazeString.charAt(i) != '\n'){
+		    maze[r][c] = mazeString.charAt(i);
+		}
+		i++;
+	    }
+	}
+	
     }
 
     public void setAnimate(boolean b){
@@ -70,12 +88,9 @@ public class Maze{
 
     /*
       Recursive Solve function:
-
       A solved maze has a path marked with '@' from S to E.
-
       Returns true when the maze is solved,
       Returns false when the maze has no solution.
-
 
       Postcondition:
 
@@ -85,20 +100,45 @@ public class Maze{
         All visited spots that are part of the solution are changed to '@'
     */
     private boolean solve(int row, int col){
-        /*if(animate){
+	if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
 
             wait(20);
 	}
-	*/
+	
         //COMPLETE SOLVE
 
         return false; //so it compiles
     }
 
+    //WAIT
+    private void wait(int millis){
+	try{
+	    Thread.sleep(millis);
+	}
+	catch(InterruptedException e){
+
+	}
+    }
+
+    //toString()
+    public String toString(){
+	String ans = "";
+	
+	for(int r = 0; r < maze.length; r++){
+	    for(int c = 0; c < maze.length; c++){
+		ans += maze[r][c];
+	    }
+	    ans += '\n';
+	}
+
+	return ans;
+    }
+	    
     //TESTS
     public static void main(String[] args){
 	Maze m = new Maze("Maze1.txt");
+	System.out.println(m);
     }
 }
 
