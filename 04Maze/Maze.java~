@@ -1,7 +1,3 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class Maze{
 
 
@@ -23,28 +19,28 @@ public class Maze{
 
     public Maze(String filename){
         //COMPLETE CONSTRUCTOR
-	String mazeString = "";
-	try{
-	    File f = new File(filename);
-	    Scanner mazeScan = new Scanner(f);
-	    while(mazeScan.hasNextLine()){
-		mazeString += mazeScan.nextLine();
-		mazeString += "\n";
-	    }
-	}catch(FileNotFoundException e){
-	    System.exit(1);
+	File f = new File(filename);
+	Scanner mazeScan = new Scanner(f);
+	while(mazeScan.hasNextLine()){
+	    String line = mazeScan.nextLine();
+	    System.out.println(line);
 	}
-	System.out.println(mazeString);
+
     }
 
     public void setAnimate(boolean b){
+
         animate = b;
+
     }
 
 
     public void clearTerminal(){
+
         //erase terminal, go to top left of screen.
+
         System.out.println("\033[2J\033[1;1H");
+
     }
 
 
@@ -53,16 +49,9 @@ public class Maze{
       Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
     */
     public boolean solve(){
-            int startr=-1, startc=-1;
+            int startr=-1,startc=-1;
+
             //Initialize starting row and startint col with the location of the S. 
-	    for(int r = 0; r < maze.length; r++){
-		for(int c = 0; c < maze[r].length; c++){
-		    if(maze[r][c] == 'S'){
-			startr = r;
-			startc = c;
-		    }
-		}
-	    }
 
             maze[startr][startc] = ' ';//erase the S, and start solving!
             return solve(startr,startc);
@@ -85,21 +74,18 @@ public class Maze{
         All visited spots that are part of the solution are changed to '@'
     */
     private boolean solve(int row, int col){
-        /*if(animate){
+        if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
 
             wait(20);
-	}
-	*/
+        }
+
         //COMPLETE SOLVE
 
         return false; //so it compiles
     }
 
-    //TESTS
-    public static void main(String[] args){
-	Maze m = new Maze("Maze1.txt");
-    }
+
 }
 
 
