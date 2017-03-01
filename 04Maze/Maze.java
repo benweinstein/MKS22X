@@ -17,7 +17,7 @@ public class Maze{
     */
     public Maze(String filename){
 	String mazeString = "";
-	int numRows = 1;
+	int numRows = 0;
 	
 	try{
 	    File f = new File(filename);
@@ -39,20 +39,49 @@ public class Maze{
 	while(mazeString.charAt(numCols) != '\n'){
 	    numCols++;
 	}
-	
+	System.out.println("r = " + numRows + ", c = " + numCols);
 	//now we can initialize the maze char[][]!!!
 	maze = new char[numRows][numCols];
+
+
+	try{
+	    File ff = new File(filename);
+	    Scanner mazeLayer = new Scanner(ff);
+
+	    int r = 0, c = 0;
+	    while(mazeLayer.hasNext() && r < numRows){
+		char temp = mazeLayer.next().charAt(0);//b/c .next() returns a
+		//String, not a char
+		if(temp == '\n'){
+		    c = 0;
+		    r++;
+		}
+		else{
+		    maze[r][c] = temp;
+		    c++;
+		}
+	    }
+	}catch(FileNotFoundException e){
+	    System.exit(1);
+	}
 	
+	/*
 	int i = 0; //for mazeString.charAt(i)
 	for(int r = 0; r < numRows; r++){
 	    for(int c = 0; c < numCols; c++){
 		if(mazeString.charAt(i) != '\n'){
 		    maze[r][c] = mazeString.charAt(i);
+		    System.out.println(printMaze(maze));
+		}
+		else{
+		    i++;
+		    maze[r][c] = mazeString.charAt(i);
+		    System.out.println(printMaze(maze));
 		}
 		i++;
 	    }
 	}
-	
+	*/
     }
 
     public void setAnimate(boolean b){
@@ -137,8 +166,10 @@ public class Maze{
 	    
     //TESTS
     public static void main(String[] args){
-	Maze m = new Maze("Maze1.txt");
-	System.out.println(m);
+	//3x3 is working
+	//Maze1 is not...
+	Maze m = new Maze("3x3.txt"); 
+       	System.out.println(m);
     }
 }
 
