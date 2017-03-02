@@ -78,45 +78,64 @@ public class Maze{
       Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
     */
     public boolean solve(){
-            int startr=-1, startc=-1;
-            //Initialize starting row and startint col with the location of the S. 
-	    for(int r = 0; r < maze.length; r++){
-		for(int c = 0; c < maze[r].length; c++){
-		    if(maze[r][c] == 'S'){
-			startr = r;
-			startc = c;
-		    }
+	int startr=-1, startc=-1;
+	//Initialize starting row and startint col with the location of the S. 
+	for(int r = 0; r < maze.length; r++){
+	    for(int c = 0; c < maze[r].length; c++){
+		if(maze[r][c] == 'S'){
+		    startr = r;
+		    startc = c;
 		}
 	    }
-
-            maze[startr][startc] = ' ';//erase the S, and start solving!
-            return solve(startr,startc);
+	}
+	
+	maze[startr][startc] = ' ';//erase the S, and start solving!
+	return solve(startr,startc);
     }
-
+    
     /*
       Recursive Solve function:
       A solved maze has a path marked with '@' from S to E.
       Returns true when the maze is solved,
       Returns false when the maze has no solution.
-
+      
       Postcondition:
-
-        The S is replaced with '@' but the 'E' is not.
-
-        All visited spots that were not part of the solution are changed to '.'
-        All visited spots that are part of the solution are changed to '@'
+      
+      The S is replaced with '@' but the 'E' is not.
+      
+      All visited spots that were not part of the solution are changed to '.'
+      All visited spots that are part of the solution are changed to '@'
     */
     private boolean solve(int row, int col){
 	if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
-
+	    
             wait(20);
 	}
 	
-        //COMPLETE SOLVE
+        //COMPLETE SOLVE HERE
+	
+	//base cases
+	if(maze[row][col] == 'E'){
+	    return true;
+	}
+	if(maze[row][col] == '@' || maze[row][col] == '.'){
+	    return false;
+	}
+	if(maze[row][col] != ' '){
+	    maze[row][col] = '.'
+	    return false;
+	}
 
-        return false; //so it compiles
+	maze[row][col] = '@'; //place an '@' here 
+	
+	//recursive calls
+	return solve(row + 1, col) ||
+	    solve(row - 1, col) ||
+	    solve(row, col + 1) ||
+	    solve(row, col - 1);
     }
+	
 
     //WAIT
     private void wait(int millis){
@@ -147,7 +166,8 @@ public class Maze{
 
 	Maze m = new Maze("Maze1.txt"); 
        	System.out.println(m);
-
+	m.solve();
+	System.out.println(m);
 	//PLAYING WITH SCANNER
 	//Scanner scn = new Scanner("Hello this\n is not a \ngood idea.");
 	//System.out.println(scn.next()); //"Hello"
