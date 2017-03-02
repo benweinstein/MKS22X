@@ -31,7 +31,7 @@ public class Maze{
 	}catch(FileNotFoundException e){
 	    System.exit(1);
 	}
-	//System.out.println(mazeString);
+	//System.out.println(mazeString); 
 
 	//finding length of a row (numCols)
 	int numCols = 0;
@@ -39,49 +39,27 @@ public class Maze{
 	while(mazeString.charAt(numCols) != '\n'){
 	    numCols++;
 	}
-	System.out.println("r = " + numRows + ", c = " + numCols);
-	//now we can initialize the maze char[][]!!!
+	//System.out.println("r = " + numRows + ", c = " + numCols);
+
+
+	//now we can initialize the maze char[][]
 	maze = new char[numRows][numCols];
 
 
-	try{
-	    File ff = new File(filename);
-	    Scanner mazeLayer = new Scanner(ff);
-
-	    int r = 0, c = 0;
-	    while(mazeLayer.hasNext() && r < numRows){
-		char temp = mazeLayer.next().charAt(0);//b/c .next() returns a
-		//String, not a char
-		if(temp == '\n'){
-		    c = 0;
-		    r++;
-		}
-		else{
-		    maze[r][c] = temp;
-		    c++;
-		}
+	int r = 0, c = 0;
+	while(mazeString.length() > 1){//1, because of the \n at the end
+	    char temp = mazeString.charAt(0);
+	    //System.out.print(temp);
+	    if(temp == '\n'){
+		c = 0;
+		r++;
 	    }
-	}catch(FileNotFoundException e){
-	    System.exit(1);
-	}
-	
-	/*
-	int i = 0; //for mazeString.charAt(i)
-	for(int r = 0; r < numRows; r++){
-	    for(int c = 0; c < numCols; c++){
-		if(mazeString.charAt(i) != '\n'){
-		    maze[r][c] = mazeString.charAt(i);
-		    System.out.println(printMaze(maze));
-		}
-		else{
-		    i++;
-		    maze[r][c] = mazeString.charAt(i);
-		    System.out.println(printMaze(maze));
-		}
-		i++;
+	    else{
+		maze[r][c] = temp;
+		c++;
 	    }
+	    mazeString = mazeString.substring(1);
 	}
-	*/
     }
 
     public void setAnimate(boolean b){
@@ -155,7 +133,7 @@ public class Maze{
 	String ans = "";
 	
 	for(int r = 0; r < maze.length; r++){
-	    for(int c = 0; c < maze.length; c++){
+	    for(int c = 0; c < maze[r].length; c++){ //bug was here... gdi
 		ans += maze[r][c];
 	    }
 	    ans += '\n';
@@ -166,10 +144,20 @@ public class Maze{
 	    
     //TESTS
     public static void main(String[] args){
-	//3x3 is working
-	//Maze1 is not...
-	Maze m = new Maze("3x3.txt"); 
+
+	Maze m = new Maze("Maze1.txt"); 
        	System.out.println(m);
+
+	//PLAYING WITH SCANNER
+	//Scanner scn = new Scanner("Hello this\n is not a \ngood idea.");
+	//System.out.println(scn.next()); //"Hello"
+	//System.out.println(scn.next()); //"this"
+
+	//System.out.println(scn.nextLine()); //"Hello this"
+
+       	//while(scn.hasNext()){
+	//System.out.println(scn.next()); //separates by words
+	//}
     }
 }
 
