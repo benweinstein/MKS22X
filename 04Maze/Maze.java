@@ -119,23 +119,23 @@ public class Maze{
 	if(maze[row][col] == 'E'){
 	    return true;
 	}
-	if(maze[row][col] == '@' || maze[row][col] == '.'){
-	    return false;
-	}
 	if(maze[row][col] != ' '){
-	    maze[row][col] = '.'
 	    return false;
 	}
-
+	
 	maze[row][col] = '@'; //place an '@' here 
 	
 	//recursive calls
-	return solve(row + 1, col) ||
-	    solve(row - 1, col) ||
-	    solve(row, col + 1) ||
-	    solve(row, col - 1);
+	if(solve(row + 1, col) ||
+	   solve(row - 1, col) ||
+	   solve(row, col + 1) ||
+	   solve(row, col - 1)){
+	    return true;
+	}
+	//need this in case  maze is not solveable
+	maze[row][col] = '.';
+	return false;
     }
-	
 
     //WAIT
     private void wait(int millis){
