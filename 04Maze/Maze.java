@@ -29,6 +29,7 @@ public class Maze{
 		numRows++;
 	    }
 	}catch(FileNotFoundException e){
+	    System.out.println("file not found, please input a valid filename");
 	    System.exit(1);
 	}
 	//System.out.println(mazeString); 
@@ -60,6 +61,42 @@ public class Maze{
 	    }
 	    mazeString = mazeString.substring(1);
 	}
+
+	//NOW CHECKING FOR E, S, BORDERS OF #s
+	//E and S
+	int countE = 0, countS = 0;
+	for(int i = 0; i < maze.length; i++){
+	    for(int j = 0; j < maze[i].length; j++){
+		if(maze[i][j] == 'E'){
+		    countE++;
+		}
+		if(maze[i][j] == 'S'){
+		    countS++;
+		}
+	    }
+	}
+
+	if(countE != 1 || countS != 1){
+	    System.out.println("incorrect number of Start ('S') and/or Exit ('E') spots in given file, please input a valid maze file. A valid maze file has one'S' and one 'E' each");
+	    System.exit(1);
+	}
+
+	//CHECKING FOR THE BORDERS OF #s
+	//first and last rows:
+	for(int c1 = 0; c1 < maze[0].length; c1++){
+	    if(maze[0][c1] != '#' || maze[maze.length - 1][c1] != '#'){
+		System.out.println("maze does not have a border of #s, please input a valid maze");
+		System.exit(1);
+	    }
+	}
+
+	//first and last cols:
+	for(int r1 = 0; r1 < maze.length; r1++){
+	    if(maze[r1][0] != '#' || maze[r1][maze[r1].length - 1] != '#'){
+		System.out.println("maze does not have a border of #s, please input a valid maze");
+		System.exit(1);
+	    }
+	}	    
     }
 
     public void setAnimate(boolean b){
