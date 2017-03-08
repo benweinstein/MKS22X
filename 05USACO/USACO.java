@@ -13,63 +13,63 @@ public class USACO{
     private int[][] instructions;
     private int finalElevation;
     private int numInstructions;
-    private int answer;
-    
+    private File bronzeFile;
+    private Scanner bronzeScan;
+
     public int bronze(String filename){
 	try{
-	    File f = new File(filename);
-	    Scanner scan = new Scanner(f);
-	    
-	    int row = Integer.parseInt(scan.next());
-	    int col = Integer.parseInt(scan.next());
-	    lake = new int[row][col];
-	    
-	    finalElevation = Integer.parseInt(scan.next());
-	    numInstructions = Integer.parseInt(scan.next());
-	    
-	    int temp = 0;
-	    while(temp < row){
-		for(int i = 0; i < col; i++){
-		    lake[temp][i] = Integer.parseInt(scan.next());
-		}
-		temp++;
-	    }
-	    
-	    instructions = new int[numInstructions][3];
-	    int temp1 = 0;
-	    while(temp1 < numInstructions){
-		for(int i = 0; i < 3; i++){
-		    if(i < 2){
-			instructions[temp1][i] = Integer.parseInt(scan.next()) - 1;
-		    }
-		    else{
-			instructions[temp1][i] = Integer.parseInt(scan.next());
-		    }
-		}
-		temp1++;
-	    }
-	    
-	    for(int i = 0;i < instructions.length;i++){
-		toStomp(instructions[i][0],instructions[i][1],instructions[i][2]);
-	    }
-	    
-	    //
-	    int totalDepth = 0;
-	    for(int r = 0; r < row; r++){
-		for(int c = 0; c < col; c++){
-		    lake[r][c] = finalElevation - lake[r][c];
-		    if(lake[r][c] > 0){
-			totalDepth += lake[r][c];
-		    }
-		}
-	    }
-	    
-	    answer = totalDepth * 72 * 72;
+	    bronzeFile = new File(filename);
+	    bronzeScan = new Scanner(bronzeFile);
 	}catch(FileNotFoundException e){
-	    System.out.println("no file");
+	    System.out.println("file not found");
 	    System.exit(1);
 	}
-	return answer;
+      	
+	int row = Integer.parseInt(bronzeScan.next());
+	int col = Integer.parseInt(bronzeScan.next());
+	lake = new int[row][col];
+	
+	finalElevation = Integer.parseInt(bronzeScan.next());
+	numInstructions = Integer.parseInt(bronzeScan.next());
+	
+	int temp = 0;
+	while(temp < row){
+	    for(int i = 0; i < col; i++){
+		lake[temp][i] = Integer.parseInt(bronzeScan.next());
+	    }
+	    temp++;
+	}
+	
+	instructions = new int[numInstructions][3];
+	int temp1 = 0;
+	while(temp1 < numInstructions){
+	    for(int i = 0; i < 3; i++){
+		if(i < 2){
+		    instructions[temp1][i] = Integer.parseInt(bronzeScan.next()) - 1;
+		}
+		else{
+		    instructions[temp1][i] = Integer.parseInt(bronzeScan.next());
+		}
+	    }
+	    temp1++;
+	}
+	
+	for(int i = 0;i < instructions.length;i++){
+	    toStomp(instructions[i][0],instructions[i][1],instructions[i][2]);
+	}
+	
+	//
+	int totalDepth = 0;
+	for(int r = 0; r < row; r++){
+	    for(int c = 0; c < col; c++){
+		lake[r][c] = finalElevation - lake[r][c];
+		if(lake[r][c] > 0){
+		    totalDepth += lake[r][c];
+		}
+	    }
+	}
+	
+	return totalDepth * 72 * 72;
     }
     
     private void toStomp(int r, int c, int stomp){
