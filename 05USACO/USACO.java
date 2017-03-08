@@ -76,9 +76,13 @@ public class USACO{
 	int largest = 0;
 	for(int i = 0; i < 3;i++){
 	    for(int k = 0;k < 3;k++){
-		if(lake[r+i][c+k] > largest){
-		    largest = lake[r+i][c+k];
-		}
+		try{
+		    if(lake[r+i][c+k] > largest){
+			largest = lake[r+i][c+k];
+		    }
+		}catch(ArrayIndexOutOfBoundsException e){
+		    //do nothing
+		}     
 	    }
 	}
 	//Elevation after largest has been stomped
@@ -88,9 +92,13 @@ public class USACO{
 	}
 	for(int i = 0;i < 3;i++){
 	    for(int k = 0;k < 3;k++){
-		if(lake[r+i][c+k] > newHighestElevation){
-		    lake[r+i][c+k] = newHighestElevation;
-		}
+		try{
+		    if(lake[r+i][c+k] > newHighestElevation){
+			lake[r+i][c+k] = newHighestElevation;
+		    }
+		}catch(ArrayIndexOutOfBoundsException e){
+		    //do nothing
+		}	       
 	    }
 	}	    	    
     }
