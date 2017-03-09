@@ -104,13 +104,44 @@ public class USACO{
     }
     
     //SILVER PROBLEM #7: COW TRAVELLING
+    private File silverFile;
+    private Scanner silverScan;
+
+    private char[][] pasture;
+    private int numPaths; //final answer
+    
+    
     public int silver(String filename){
-	return -1; //to be filled in later
+	try{
+	    silverFile = new File(filename);
+	    silverScan = new Scanner(silverFile);
+	}catch(FileNotFoundException e){
+	    System.out.println("file not found");
+	    System.exit(1);
+	}
+
+	//System.out.println(silverScan.nextInt());
+	int rows = silverScan.nextInt();
+	int cols = silverScan.nextInt();
+
+	pasture = new char[rows][cols];
+
+	//total number of seconds cow should take to get to new place in pasture
+	int seconds = silverScan.nextInt();
+
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		pasture[r][c] = silverScan.next().charAt(0);
+	    }
+	}
+	
+	return numPaths;
     }
 
     //TESTS
     public static void main(String[] args){
 	USACO m = new USACO();
-	System.out.println(m.bronze("bronzetest1.txt"));
+	//System.out.println(m.bronze("bronzetest1.txt"));
+	System.out.println(m.silver("silverTest1.txt"));
     }
 }
