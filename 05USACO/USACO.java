@@ -103,6 +103,12 @@ public class USACO{
 	}	    	    
     }
     
+    //
+    //
+    //
+    //
+    //
+    //
     //SILVER PROBLEM #7: COW TRAVELLING
     private File silverFile;
     private Scanner silverScan;
@@ -121,27 +127,67 @@ public class USACO{
 	}
 
 	//System.out.println(silverScan.nextInt());
-	int rows = silverScan.nextInt();
-	int cols = silverScan.nextInt();
+	int row = silverScan.nextInt();
+	int col = silverScan.nextInt();
 
-	pasture = new char[rows][cols];
+	pasture = new char[row][col];
 
 	//total number of seconds cow should take to get to new place in pasture
 	int seconds = silverScan.nextInt();
+	System.out.println(seconds);
 
-	for(int r = 0; r < rows; r++){
-	    for(int c = 0; c < cols; c++){
-		pasture[r][c] = silverScan.next().charAt(0);
+	for(int r = 0; r < row; r++){
+	    String line = silverScan.next();
+	    for(int c = 0; c < col; c++){
+		pasture[r][c] = line.charAt(c);
 	    }
 	}
+	
+	//what should be left now is the last row, space-separated:
+	//R1 C1 R2 C2
+	//NOTE: NEED TO MAKE SURE THAT THESE ARE ACTUALLY ON THE BOARD
+	int r1 = silverScan.nextInt() - 1;
+	int c1 = silverScan.nextInt() - 1;
+	int r2 = silverScan.nextInt() - 1;
+	int c2 = silverScan.nextInt() - 1;
+	
+	//System.out.println(r1 + "," + c1 + "," + r2 + "," + c2);
+
+	//call recursive helper
+	navigateH(r1, c1, r2, c2, seconds);
 	
 	return numPaths;
     }
 
+    //recursive helper for silver
+    private void navigateH(int r1, int c1, int r2, int c2, int timeLeft){
+	//base cases 
+	if(timeLeft == 0 && r1 == r2 && c1 == c2){
+	    numPaths++;
+	    return;
+	}
+        if(timeLeft == 0){
+	    return;
+	}
+	try{
+	    if(pasture[r1][c1] == '*'){
+		return;
+	    }
+	}catch(ArrayIndexOutOfBoundsException e){
+	    return;
+	}
+	
+	//recursive calls
+	navigateH(r1 + 1, c1, r2, c2, timeLeft - 1);
+	navigateH(r1 - 1, c1, r2, c2, timeLeft - 1);
+	navigateH(r1, c1 + 1, r2, c2, timeLeft - 1);
+	navigateH(r1, c1 - 1, r2, c2, timeLeft - 1);
+    }
+		
     //TESTS
     public static void main(String[] args){
 	USACO m = new USACO();
 	//System.out.println(m.bronze("bronzetest1.txt"));
-	System.out.println(m.silver("silverTest1.txt"));
+	System.out.println(m.silver("silverTest2.txt"));
     }
 }
