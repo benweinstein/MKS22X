@@ -134,7 +134,7 @@ public class USACO{
 
 	//total number of seconds cow should take to get to new place in pasture
 	int seconds = silverScan.nextInt();
-	System.out.println(seconds);
+	//System.out.println(seconds);
 
 	for(int r = 0; r < row; r++){
 	    String line = silverScan.next();
