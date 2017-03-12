@@ -43,7 +43,8 @@ public class Silver{
 		}//everything else stays at 0
 	    }
 	}
-
+	printPastures();
+	
 	int r1 = silverScan.nextInt() - 1;
 	int c1 = silverScan.nextInt() - 1;
 	goalR = silverScan.nextInt() - 1;
@@ -67,45 +68,66 @@ public class Silver{
 	}
 
 	//updating newAry
+	
 	for(int r = 0; r < newAry.length; r++){
 	    for(int c = 0; c < newAry[r].length; c++){
-		int newVal = 0;
-		try{
-		    if(oldAry[r + 1][c] != -1){
-			newVal += oldAry[r + 1][c];
-		    }
-		}catch(ArrayIndexOutOfBoundsException e){}
-
-		try{
-		    if(oldAry[r - 1][c] != -1){		
-			newVal += oldAry[r - 1][c];
-		    }
-		}catch(ArrayIndexOutOfBoundsException e){}
-
-		try{
-		    if(oldAry[r][c + 1] != -1){
-			newVal += oldAry[r][c + 1];
-		    }
-		}catch(ArrayIndexOutOfBoundsException e){}
-
-		try{
-		    if(oldAry[r][c - 1] != -1){			
-			newVal += oldAry[r][c - 1];
-		    }
-		}catch(ArrayIndexOutOfBoundsException e){}
-
-		newAry[r][c] = newVal;
+		if(oldAry[r][c] != -1){ //NEEDED THIS!!! So that the -1's don't
+		    //ever get changed!!!
+		    int newVal = 0;
+		    try{
+			if(oldAry[r + 1][c] != -1){
+			    newVal += oldAry[r + 1][c];
+			}
+		    }catch(ArrayIndexOutOfBoundsException e){}
+		    
+		    try{
+			if(oldAry[r - 1][c] != -1){		
+			    newVal += oldAry[r - 1][c];
+			}
+		    }catch(ArrayIndexOutOfBoundsException e){}
+		    
+		    try{
+			if(oldAry[r][c + 1] != -1){
+			    newVal += oldAry[r][c + 1];
+			}
+		    }catch(ArrayIndexOutOfBoundsException e){}
+		    
+		    try{
+			if(oldAry[r][c - 1] != -1){			
+			    newVal += oldAry[r][c - 1];
+			}
+		    }catch(ArrayIndexOutOfBoundsException e){}
+		    
+		    
+		    newAry[r][c] = newVal;
+		}
 	    }
 	}
-
+	printPastures();
 	//recursive call
 	//note the switching of newAry with oldAry
 	return navigateH(newAry, oldAry, seconds - 1);
     }
 
+    //prints out pastures
+    private void printPastures(){
+	for(int r = 0; r < pasture1.length; r++){
+	    for(int c = 0; c < pasture1[r].length; c++){
+		if(c == pasture1[r].length - 1){
+		    System.out.println(pasture1[r][c] + "," + pasture2[r][c] + "  ");
+		}
+		else{
+		    System.out.print(pasture1[r][c] + "," + pasture2[r][c] + "  ");
+		}
+	    }
+	}
+	System.out.println("\n");
+    }
+
+    //TESTS
     public static void main(String[] args){
 	Silver m = new Silver();
-	System.out.println(m.silver("silverTest1.txt"));
+	System.out.println(m.silver(args[0]));
     }
 }
 			   
