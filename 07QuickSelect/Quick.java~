@@ -1,0 +1,13 @@
+import java.util.Random;
+
+public class Quick{
+    
+    /**
+     *Uses partition method.
+     *@return the value that is the kth smallest value of the array.
+     */
+    public static int quickselect(int[] data, int k){
+	
+
+
+}
