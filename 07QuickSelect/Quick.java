@@ -82,4 +82,20 @@ public class Quick{
 
 	return back; //returns final position of partitioned element
     }
+
+    //TESTS
+    public static void main(String[] args){
+	int[] a = {11, 19, 12, 14, 13, 18, 10, 15, 17, 16};
+	System.out.println(quickselect(a, 0)); //should be 10
+	System.out.println(quickselect(a, 1)); //11
+	System.out.println(quickselect(a, 2)); //12
+	System.out.println(quickselect(a, 3)); //13
+	System.out.println(quickselect(a, 4)); //14
+	System.out.println(quickselect(a, 5)); //15
+	System.out.println(quickselect(a, 6)); //16
+	System.out.println(quickselect(a, 7)); //17
+	System.out.println(quickselect(a, 8)); //18
+	System.out.println(quickselect(a, 9)); //19
+	//first tests work!!!
+    }
 }
