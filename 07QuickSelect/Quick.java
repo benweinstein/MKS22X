@@ -83,6 +83,14 @@ public class Quick{
 	return back; //returns final position of partitioned element
     }
 
+    //for test
+    public static void printAry(int[] ary){
+	for(int i = 0; i < ary.length; i++){
+	    System.out.print("" +  ary[i] + " ");
+	}
+	System.out.println();
+    }
+
     //TESTS
     public static void main(String[] args){
 	int[] a = {11, 19, 12, 14, 13, 18, 10, 15, 17, 16};
@@ -97,5 +105,18 @@ public class Quick{
 	System.out.println(quickselect(a, 8)); //18
 	System.out.println(quickselect(a, 9)); //19
 	//first tests work!!!
+
+	//more tests for part()!!! On duplicates:
+	int[] b = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
+	printAry(b);
+	System.out.println(part(b, 0, b.length - 1));
+	printAry(b);
+
+	//more!!! On a subset of an array:
+	printAry(b);
+	System.out.println(part(b, 3, 7));
+	printAry(b);
+
+	//both were successes!
     }
 }
