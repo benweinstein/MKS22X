@@ -1,6 +1,23 @@
 import java.util.Random;
 
 public class Quick{
+
+    /**
+     *Wrapper function for quicksort.
+     *Calls qsh (helper function)
+     */
+    public static void quicksort(int[] data){
+	qsh(data, 0, data.length - 1);
+    }
+
+    //recursive helper for quicksort
+    private static void qsh(int[] data, int left, int right){
+	if(left < right){
+	    int p = part(data, left, right);
+	    qsh(data, p + 1, right);
+	    qsh(data, left, p - 1);
+	}
+    }  
     
     /**
      *Uses part method as a helper (copied over from Partition.java
