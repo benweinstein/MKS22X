@@ -66,9 +66,7 @@ public class Quick{
 	    //if current, front element > to-be-partitioned element:
 	    if(data[front] > data[end]){
 		//switch with 'back' spot
-		temp = data[front];
-		data[front] = data[back - 1];
-		data[back - 1] = temp;
+		swap(data, front, back - 1);
 
 		/*
 		//for tests:
@@ -85,9 +83,7 @@ public class Quick{
 	}
 	
 	//switch the to-be-partitioned element with the current 'back' element
-	temp = data[back];
-	data[back] = data[end];
-	data[end] = temp;
+	swap(data, back, end);
 	
 	/*
 	//for tests: 
@@ -100,6 +96,13 @@ public class Quick{
 	return back; //returns final position of partitioned element
     }
 
+    //swap helper method:
+    public static void swap(int[] ary, int x, int y){
+	int helper = ary[x];
+	ary[x] = ary[y];
+	ary[y] = helper;
+    }
+    
     //for test
     public static void printAry(int[] ary){
 	for(int i = 0; i < ary.length; i++){
@@ -134,6 +137,11 @@ public class Quick{
 	System.out.println(part(b, 3, 7));
 	printAry(b);
 
+	quicksort(a);
+	printAry(a);
+
+	quicksort(b);
+	printAry(b);
 	//both were successes!
     }
 }
