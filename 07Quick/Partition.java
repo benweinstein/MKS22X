@@ -101,5 +101,6 @@ public class Partition{
 
 	int[] data = {11, 14, 12, 13, 17, 19, 16, 15, 10, 18};
 	System.out.println(part(data, 1, 9)); 
+	System.out.println(Quick.newPart(data, 1, 9));
     }
 }

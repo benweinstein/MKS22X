@@ -49,16 +49,51 @@ public class Quick{
 	return data[ansIndex];
     }
 
-    //helper part method
-    public static int part(int[] data, int start, int end){
+  
+    //new helper part method (Dutch Flag Problem)
+    public static int newPart(int[] data, int start, int end){
+	Random rand = new Random();
+	int index = rand.nextInt(end - start + 1) + start;
+	System.out.println(index);
+
+	//switch the 'to be partitioned' element to the end
+	swap(data, index, end);
+	
+	//now consider the array from start to end - 1 like a blank array:
+	int gt = end - 1; //area of the array greater than the designated element
+	int lt = start; //area of the array less than the designated element 
+	int i = start;
+	
+	while(i <= gt){
+	    if(data[i] < data[end]){
+		swap(data, i, lt);
+		i++;
+	    }
+	    else if(data[i] == data[end]){
+		i++;
+		lt++;
+	    }
+	    else{
+		swap(data, i, gt);
+		gt--;
+	    }
+	    printAry(data);
+	}
+
+	swap(data, end, gt);
+	printAry(data);
+	return 0;
+    }
+    
+
+    //helper part method (OLD)
+    private static int part(int[] data, int start, int end){
 	Random rand = new Random();
 	int index = rand.nextInt(end - start + 1) + start;
 	//System.out.println(index + "\n");
 	
 	//switch the 'to be partitioned' element to the end
-	int temp = data[index];
-	data[index] = data[end];
-	data[end] = temp;
+	swap(data, index, end);
 
 	//now consider the array from start to end - 1 like a blank array:
 	int back = end;
