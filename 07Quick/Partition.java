@@ -48,6 +48,40 @@ public class Partition{
 	return back; //returns final position of partitioned element
     }
 
+    //DUTCH FLAG
+    public static int newPart(int[] data, int start, int end){
+	Random rand = new Random();
+	int index = rand.nextInt(end - start + 1) + start;
+	System.out.println(index);
+	
+	//switch the 'to be partitioned' element to the end
+	swap(data, index, end);
+	
+	//now consider the array from start to end - 1 like a blank array:
+	int gt = end - 1; //area of the array greater than the designated element
+	int lt = start; //area of the array less than the designated element 
+	int i = start;
+	
+	while(i <= gt){
+	    if(data[i] < data[end]){
+		swap(data, i, lt);
+		i++;
+	    }
+	    else if(data[i] == data[end]){
+		i++;
+		lt++;
+	    }
+	    else{
+		swap(data, i, gt);
+		gt--;
+	    }
+	    printAry(data);
+	}
+
+	swap(data, end, gt);
+	printAry(data);
+	return 0;
+    }
 
     //basic idea 
     public static void partition(int[] ary, int index){
@@ -101,6 +135,6 @@ public class Partition{
 
 	int[] data = {11, 14, 12, 13, 17, 19, 16, 15, 10, 18};
 	System.out.println(part(data, 1, 9)); 
-	System.out.println(Quick.newPart(data, 1, 9));
+	System.out.println(newPart(data, 1, 9));
     }
 }
