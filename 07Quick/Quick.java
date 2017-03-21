@@ -10,14 +10,53 @@ public class Quick{
 	qsh(data, 0, data.length - 1);
     }
 
-    //recursive helper for quicksort
+    //recursive helper for quicksort (NEW--DUTCH FLAG VERSION)
+    private static void qsh(int[] data, int left, int right){
+	if(left < right){
+	    Random rand = new Random();
+	    int index = rand.nextInt(right - left + 1) + left;
+	    System.out.println("rand: " + index);
+	    //THIS IS THE PART THAT'S MESSING UP!!!
+	    swap(data, index, left);
+	    
+	    int gt = right;
+	    int i = left + 1;
+	    int lt = left;
+	    
+	    while(i <= gt){
+		if(data[i] < data[left]){
+		    swap(data, i, lt);
+		    i++;
+		}
+		else if(data[i] == data[left]){
+		    i++;
+		    lt++;
+		}
+		else{
+		    swap(data, i, gt);
+		    gt--;
+		}
+	    }
+	    
+	    swap(data, left, i);
+	    printAry(data);
+	    
+	    //recursive calls (remember that they're inclusive):
+	    qsh(data, i, right);
+	    qsh(data, left, lt - 1);
+	}
+    }
+
+    /*
+    //recursive helper for quicksort (OLD)
     private static void qsh(int[] data, int left, int right){
 	if(left < right){
 	    int p = part(data, left, right);
 	    qsh(data, p + 1, right);
 	    qsh(data, left, p - 1);
 	}
-    }  
+    }
+    */
     
     /**
      *Uses part method as a helper (copied over from Partition.java
@@ -48,43 +87,6 @@ public class Quick{
 
 	return data[ansIndex];
     }
-
-  
-    //new helper part method (Dutch Flag Problem)
-    public static int newPart(int[] data, int start, int end){
-	Random rand = new Random();
-	int index = rand.nextInt(end - start + 1) + start;
-	System.out.println(index);
-
-	//switch the 'to be partitioned' element to the end
-	swap(data, index, end);
-	
-	//now consider the array from start to end - 1 like a blank array:
-	int gt = end - 1; //area of the array greater than the designated element
-	int lt = start; //area of the array less than the designated element 
-	int i = start;
-	
-	while(i <= gt){
-	    if(data[i] < data[end]){
-		swap(data, i, lt);
-		i++;
-	    }
-	    else if(data[i] == data[end]){
-		i++;
-		lt++;
-	    }
-	    else{
-		swap(data, i, gt);
-		gt--;
-	    }
-	    printAry(data);
-	}
-
-	swap(data, end, gt);
-	printAry(data);
-	return 0;
-    }
-    
 
     //helper part method (OLD)
     private static int part(int[] data, int start, int end){
@@ -161,6 +163,12 @@ public class Quick{
 	System.out.println(quickselect(a, 9)); //19
 	//first tests work!!!
 
+	//for quicksort!!!
+	printAry(a);
+	quicksort(a);
+	printAry(a);
+	
+	/*
 	//more tests for part()!!! On duplicates:
 	int[] b = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
 	printAry(b);
@@ -178,5 +186,6 @@ public class Quick{
 	quicksort(b);
 	printAry(b);
 	//both were successes!
+	*/
     }
 }
