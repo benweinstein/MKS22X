@@ -58,12 +58,63 @@ public class Quick{
 	}
     }
     */
-    
-    /**
-     *Uses part method as a helper (copied over from Partition.java
-     *just to have it all in one place).
-     *@return the value that is the kth smallest value of the array.
-     */
+
+    //NEW QUICKSELECT (DUTCH FLAG):
+    public static int quickselect(int[] data, int k){
+	return selectH(data, k, 0, data.length - 1);
+    }
+
+    //recursive helper for quickselect (NEW)
+    private static int selectH(int[] data, int k, int left, int right){
+	//base case (NEEDED THIS FOR WHEN ARRAY GETS TO SIZE OF ONE):
+	if(left == right){
+	    return data[left];
+	}
+	
+	Random rand = new Random();
+	int index = rand.nextInt(right - left + 1) + left;
+	//System.out.println("rand: " + index);
+	
+	swap(data, index, left);
+
+	int gt = right;
+	int i = left + 1;
+	int lt = left + 1;
+	
+	while(i <= gt){
+	    if(data[i] < data[left]){
+		swap(data, i, lt);
+		i++;
+		lt++;
+	    }
+	    else if(data[i] == data[left]){
+		i++;
+	    }
+	    else{
+		swap(data, i, gt);
+		gt--;
+	    }
+	}
+	
+	swap(data, left, lt - 1);
+	//printAry(data);
+	
+	//if it's in the range of clustered equals, then you're done:
+	if(k <= gt && k >= lt){
+	    return data[k];
+	}
+       
+	//if not, then you go to the recursive calls:
+        if(k < lt){ //if on the left
+	    return selectH(data, k, left, lt - 1);
+	}
+	
+	return selectH(data, k, i, right); //if on the right	
+    }
+
+
+	
+    /*OLD 
     public static int quickselect(int[] data, int k){
 	int start = 0;
 	int end = data.length - 1;
@@ -88,7 +139,8 @@ public class Quick{
 
 	return data[ansIndex];
     }
-
+    */
+    
     //helper part method (OLD)
     private static int part(int[] data, int start, int end){
 	Random rand = new Random();
@@ -151,8 +203,8 @@ public class Quick{
 
     //TESTS
     public static void main(String[] args){
-	int[] a = {11, 19, 12, 14, 13, 18, 10, 15, 17, 16};
-	/*System.out.println(quickselect(a, 0)); //should be 10
+	/*int[] a = {11, 19, 12, 14, 13, 18, 10, 15, 17, 16};
+	System.out.println(quickselect(a, 0)); //should be 10
 	System.out.println(quickselect(a, 1)); //11
 	System.out.println(quickselect(a, 2)); //12
 	System.out.println(quickselect(a, 3)); //13
@@ -162,7 +214,7 @@ public class Quick{
 	System.out.println(quickselect(a, 7)); //17
 	System.out.println(quickselect(a, 8)); //18
 	System.out.println(quickselect(a, 9)); //19
-	*/
+	
 	//first tests work!!!
 
 	//for quicksort!!!
@@ -170,9 +222,13 @@ public class Quick{
 	quicksort(a);
 	printAry(a);
 	//finally work!!!
+	*/
 
 	//more with duplicates
 	int[] b = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
+	System.out.println(quickselect(b, 3));
+	System.out.println(quickselect(b, 7));
+	System.out.println(quickselect(b, 0));
 	printAry(b);
 	quicksort(b);
 	printAry(b);
