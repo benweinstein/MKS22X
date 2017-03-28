@@ -1,0 +1,19 @@
+public class MyLinkedList{
+    //instance vars
+    private LNode start;
+    private int size;
+
+    //default constructor:
+    public MyLinkedList(){
+	//defaults to null for start, 0 for size
+    }
+
+    //add something to the start of a linked list	
+
+
+    //inner LNode class
+    private class LNode{
+	private int value;
+	private LNode next;
+    }
+}
