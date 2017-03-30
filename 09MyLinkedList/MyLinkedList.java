@@ -8,6 +8,7 @@ public class MyLinkedList{
 	//defaults to null for start, 0 for size
     }
 
+
     /*
       PHASE I
     */
@@ -119,6 +120,52 @@ public class MyLinkedList{
 	}
     }
 
+
+    /*
+      PHASE II
+    */
+
+    //returns the index of the first occurrence of the value in the linked list,
+    //returns -1 if not found
+    public int indexOf(int value){
+	int counter = 0;
+	LNode current = start;
+	
+	while(current.next != null){
+	    if(current.value == value){
+		return counter;
+	    }
+	    
+	    current = current.next;
+	}
+
+	//for the last case: 
+	if(counter == size() - 1 && current.value == value){
+	    return counter;
+	}
+	    
+	return -1;
+    }
+
+    //insert a new element at the specified index, 0 at the front, size() at 
+    //the end
+    public void add(int index, int value){
+	if(index < 0 || index > size()){
+	    throw new IndexOutOfBoundsException();
+	}
+
+	return;
+    }
+
+    //remove the element at the specified index, returns the value removed
+    public int remove(int index){
+	if(index < 0 || index >= size()){
+	    throw new IndexOutOfBoundsException();
+	}
+
+	return 0;
+    }
+
     //TESTS
     public static void main(String[] args){
 	MyLinkedList l = new MyLinkedList();
@@ -132,5 +179,8 @@ public class MyLinkedList{
 	System.out.println(l.set(0, 66)); //34
 	System.out.println(l); //[ 66, 3, 234]
 
+	System.out.println(l.indexOf(66));
+	System.out.println(l.indexOf(234));
+	System.out.println(l.indexOf(24123));
     }
 }
