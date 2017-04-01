@@ -185,8 +185,40 @@ public class MyLinkedList{
 	if(index < 0 || index >= size()){
 	    throw new IndexOutOfBoundsException();
 	}
+	
+	int holder = 0;
 
-	return 0;
+	//removing 0th LNode:
+	if(index == 0){
+	    holder = start.value;
+	    
+	    start = start.next;
+
+	    size--;
+	    return holder;
+	}
+
+	//removing last LNode:
+	if(index == size() - 1){
+	    holder = getNthNode(index).value;
+	    
+	    LNode secondToLast = getNthNode(index - 1);
+	    secondToLast.next = null;
+
+	    size--;
+	    return holder;
+	}
+	
+	//removing from the middle (a.k.a. any other case):
+	LNode indexthNode = getNthNode(index);
+	LNode nodeBefore = getNthNode(index - 1);
+
+	holder = indexthNode.value;
+
+	nodeBefore.next = indexthNode.next;	
+	      
+	size--;
+	return holder;
     }
 
     //TESTS
@@ -214,6 +246,27 @@ public class MyLinkedList{
 	l.add(6, 6);
 	System.out.println(l);
 	
+	System.out.println(l.remove(0));
+	System.out.println(l.remove(5));
+	System.out.println(l);
+
+	System.out.println(l.remove(5));
+	System.out.println(l);
+
+	MyLinkedList a = new MyLinkedList();
 	
+	a.add(0);
+	System.out.println(a.remove(0));
+	System.out.println(a);
+	
+	a.add(1);
+	a.add(2);
+	a.add(3);
+	a.add(4);
+	a.add(5);
+
+	System.out.println(a);
+	
+       
     }
 }
