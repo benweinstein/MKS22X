@@ -16,7 +16,7 @@ public class MyLinkedList{
     
     //adds the value to the start of a linked list	
     private boolean addToStart(int value){
-	LNode newStart = new LNode(value);
+	LNode newStart = new LNode(value, start);
 	start = newStart;
 	size++;
 	return true;
@@ -26,7 +26,7 @@ public class MyLinkedList{
     public boolean add(int value){
 	//basics: change the 'next' of the ending node
 	if(size == 0){
-	    addToStart(value);
+	    return addToStart(value);
 	}
 	else{
 	    LNode oldEnd = getNthNode(size - 1);
@@ -137,6 +137,7 @@ public class MyLinkedList{
 	    }
 	    
 	    current = current.next;
+	    counter++;
 	}
 
 	//for the last case: 
@@ -154,7 +155,29 @@ public class MyLinkedList{
 	    throw new IndexOutOfBoundsException();
 	}
 
-	return;
+	//Using what has already been written: 
+	if(index == 0){ //if you're adding to the start...
+	    addToStart(value);
+	    return;
+	}
+
+	if(index == size()){ //if you're adding to the end...
+	    add(value);
+	    return;
+	}
+
+	//if you're adding into the middle:
+	LNode current = start;
+
+	while(index > 1){
+	    current = current.next;
+	    index--;
+	}
+	
+	LNode toBeAdded = new LNode(value, current.next);
+	current.next = toBeAdded;
+
+	size++;
     }
 
     //remove the element at the specified index, returns the value removed
@@ -182,5 +205,15 @@ public class MyLinkedList{
 	System.out.println(l.indexOf(66));
 	System.out.println(l.indexOf(234));
 	System.out.println(l.indexOf(24123));
+
+	l.add(3, 24);
+	l.add(0, 55);
+	System.out.println(l);
+	l.add(2, 499);
+	l.add(1, 99);
+	l.add(6, 6);
+	System.out.println(l);
+	
+	
     }
 }
