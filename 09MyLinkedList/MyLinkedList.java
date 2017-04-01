@@ -266,7 +266,5 @@ public class MyLinkedList{
 	a.add(5);
 
 	System.out.println(a);
-	
-       
     }
 }
