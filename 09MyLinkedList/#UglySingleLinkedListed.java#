@@ -1,89 +1,18 @@
-public class MyLinkedList{
-    
-    //inner LNode class
-    private class LNode{
-        LNode next, prev;
-	int value;
-	
-	//constructor:
-	public LNode(int value){
-	    this.value = value;
-	}
-	
-	//toString()
-	public String toString(){
-	    return value + " ";
-	}
-    }
-
-    //instance vars
-    private LNode head, tail;
-    private int size;
+public class UglySingleLinkedList{
+     //instance vars
+    private LNode 
 
     //default constructor:
     public MyLinkedList(){
 	//defaults to null for start, 0 for size
     }
-    
-    //returns the number of elements in the list
-    public int size(){
-	return size;
-    }
-
-    //super helpful helper method:
-    //needs to prioritize from the back or from the start...
-    private LNode getNthNode(int n){
-	LNode nth = start;
-	
-	while(nth.next != null && n > 0){
-	    //System.out.println(nth.value);
-	    nth = nth.next;
-	    n--;
-	}
-	
-	return nth;
-    }
-    
-    //helper for add(int index, int value)
-    private void addAfter(LNode location, LNode toBeAdded){/*complete this*/  }
-    
-    //helper for remove(int index) 
-    private void remove(LNode target){/*complete this*/}
-    
-    //toString()
-    public String toString(){ /*complete this*/  }
-    
-    //adds the value to the end of the list
-    public boolean add(int value){  /*complete this*/ }
-    
-    //returns the value of the element at the specified index (0 based)
-    public int get(int index){
-	if(index < 0 || index >= size()){
-	    throw new IndexOutOfBoundsException();
-	}
-
-	return getNthNode(index).value;
-    }
-    
-    //changes the value of the element at the specified index to the new value
-    //returns the old value
-    public int set(int index, int value){/*complete this*/}
-    
-    //returns the index of the 1st occurrence of the value in the linked list,
-    //returns -1 if specified value not found
-    public int indexOf(int value){/*complete this*/}
-    
-    //removes the element at the specified index
-    //returns the value removed
-    public int remove(int index){/*complete this*/}
-    
-    //adds the new value to the specified index 
-    //NOTE: the new value is added before (!!!) the value previously occupying
-    //the spot (e.g. add(0, 3) adds 3 to the start of the linked list)
-    public void add(int index,int value){/*complete this*/}
-    
 
 
+    /*
+      PHASE I
+    */
+    
+    
     //adds the value to the start of a linked list	
     private boolean addToStart(int value){
 	LNode newStart = new LNode(value, start);
@@ -107,7 +36,19 @@ public class MyLinkedList{
 	return true;
     }
 
+    //return the number of elements in the list
+    public int size(){
+	return size;
+    }
+    
+    //return the value of the element at the specified index (0 based)
+    public int get(int index){
+	if(index < 0 || index >= size()){
+	    throw new IndexOutOfBoundsException();
+	}
 
+	return getNthNode(index).value;
+    }
 
     //change the value of the element at the specified index to the newValue,
     //return the old value
@@ -122,6 +63,19 @@ public class MyLinkedList{
 	beingReplaced.value = newValue;
 	    
 	return holder;
+    }
+
+    //helper method, super useful
+    private LNode getNthNode(int n){
+	LNode nth = start;
+	
+	while(nth.next != null && n > 0){
+	    //System.out.println(nth.value);
+	    nth = nth.next;
+	    n--;
+	}
+
+	return nth;
     }
 
     //toString
@@ -145,7 +99,26 @@ public class MyLinkedList{
 	return ans;
     }
 
-  
+    //inner LNode class
+    private class LNode{
+	private int value;
+	private LNode next;
+
+	//constructors:
+
+	//your average node
+	public LNode(int val, LNode nex){
+	    value = val;
+	    next = nex;
+	}
+	
+	//so you can create an end node
+	public LNode(int val){
+	    value = val;
+	    next = null;
+	}
+    }
+
 
     /*
       PHASE II
