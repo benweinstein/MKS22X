@@ -48,10 +48,39 @@ public class MyLinkedList{
     private void addAfter(LNode location, LNode toBeAdded){/*complete this*/  }
     
     //helper for remove(int index) 
-    private void remove(LNode target){/*complete this*/}
+    private int remove(LNode target){
+	if(target.next == null && target.prev == null){
+	}
+
+
+	else{
+	    //last case
+	    target.prev.next = target.next;
+	    target.next.prev = target.prev;
+	}
+	return target.value;
+    }
     
     //toString()
-    public String toString(){ /*complete this*/  }
+    public String toString(){
+		String ans = "[";
+	LNode current = start;
+
+	while(current != null){
+	    if(current.next == null){
+		ans += " " + current.value;
+	    }
+	    else{
+		ans += " " + current.value + ",";
+	    }
+
+	    current = current.next;
+	}
+
+	ans += "]";
+
+	return ans;
+    }
     
     //adds the value to the end of the list
     public boolean add(int value){  /*complete this*/ }
@@ -75,178 +104,15 @@ public class MyLinkedList{
     
     //removes the element at the specified index
     //returns the value removed
-    public int remove(int index){/*complete this*/}
+    public int remove(int index){
+	return remove(getNthNode(index));
+    }
     
     //adds the new value to the specified index 
     //NOTE: the new value is added before (!!!) the value previously occupying
     //the spot (e.g. add(0, 3) adds 3 to the start of the linked list)
     public void add(int index,int value){/*complete this*/}
     
-
-
-    //adds the value to the start of a linked list	
-    private boolean addToStart(int value){
-	LNode newStart = new LNode(value, start);
-	start = newStart;
-	size++;
-	return true;
-    }
-
-    //adds the value to the end of a linked list
-    public boolean add(int value){
-	//basics: change the 'next' of the ending node
-	if(size == 0){
-	    return addToStart(value);
-	}
-	else{
-	    LNode oldEnd = getNthNode(size - 1);
-	    oldEnd.next = new LNode(value); 
-	}
-	
-	size++;
-	return true;
-    }
-
-
-
-    //change the value of the element at the specified index to the newValue,
-    //return the old value
-    public int set(int index, int newValue){
-	if(index < 0 || index >= size()){
-	    throw new IndexOutOfBoundsException();
-	}
-
-	LNode beingReplaced = getNthNode(index);
-	int holder = beingReplaced.value;
-
-	beingReplaced.value = newValue;
-	    
-	return holder;
-    }
-
-    //toString
-    public String toString(){
-	String ans = "[";
-	LNode current = start;
-
-	while(current != null){
-	    if(current.next == null){
-		ans += " " + current.value;
-	    }
-	    else{
-		ans += " " + current.value + ",";
-	    }
-
-	    current = current.next;
-	}
-
-	ans += "]";
-
-	return ans;
-    }
-
-  
-
-    /*
-      PHASE II
-    */
-
-    //returns the index of the first occurrence of the value in the linked list,
-    //returns -1 if not found
-    public int indexOf(int value){
-	int counter = 0;
-	LNode current = start;
-	
-	while(current.next != null){
-	    if(current.value == value){
-		return counter;
-	    }
-	    
-	    current = current.next;
-	    counter++;
-	}
-
-	//for the last case: 
-	if(counter == size() - 1 && current.value == value){
-	    return counter;
-	}
-	    
-	return -1;
-    }
-
-    //insert a new element at the specified index, 0 at the front, size() at 
-    //the end
-    public void add(int index, int value){
-	if(index < 0 || index > size()){
-	    throw new IndexOutOfBoundsException();
-	}
-
-	//Using what has already been written: 
-	if(index == 0){ //if you're adding to the start...
-	    addToStart(value);
-	    return;
-	}
-
-	if(index == size()){ //if you're adding to the end...
-	    add(value);
-	    return;
-	}
-
-	//if you're adding into the middle:
-	LNode current = start;
-
-	while(index > 1){
-	    current = current.next;
-	    index--;
-	}
-	
-	LNode toBeAdded = new LNode(value, current.next);
-	current.next = toBeAdded;
-
-	size++;
-    }
-
-    //remove the element at the specified index, returns the value removed
-    public int remove(int index){
-	if(index < 0 || index >= size()){
-	    throw new IndexOutOfBoundsException();
-	}
-	
-	int holder = 0;
-
-	//removing 0th LNode:
-	if(index == 0){
-	    holder = start.value;
-	    
-	    start = start.next;
-
-	    size--;
-	    return holder;
-	}
-
-	//removing last LNode:
-	if(index == size() - 1){
-	    holder = getNthNode(index).value;
-	    
-	    LNode secondToLast = getNthNode(index - 1);
-	    secondToLast.next = null;
-
-	    size--;
-	    return holder;
-	}
-	
-	//removing from the middle (a.k.a. any other case):
-	LNode indexthNode = getNthNode(index);
-	LNode nodeBefore = getNthNode(index - 1);
-
-	holder = indexthNode.value;
-
-	nodeBefore.next = indexthNode.next;	
-	      
-	size--;
-	return holder;
-    }
-
     //TESTS
     public static void main(String[] args){
 	MyLinkedList l = new MyLinkedList();
