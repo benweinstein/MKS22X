@@ -31,7 +31,8 @@ public class UglySingleLinkedList{
 	}
 	else{
 	    LNode oldEnd = getNthNode(size - 1);
-	    oldEnd.next = new LNode(value); 
+	    oldEnd.next = new LNode(value);
+	    LNode oldEnd.next.prev = oldEnd;
 	}
 	
 	size++;

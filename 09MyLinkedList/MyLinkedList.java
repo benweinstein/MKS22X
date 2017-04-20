@@ -1,4 +1,43 @@
-public class MyLinkedList{
+import java.util.*;
+
+public class MyLinkedList implements Iterable<Integer>{
+
+    //in order to implement Iterable interface
+    public Iterator<Integer> iterator(){
+	return new MyLinkedListIterator(this);
+    }   
+
+    //inner Iterator class
+    private class MyLinkedListIterator implements Iterator<Integer>{
+	private MyLinkedList list;
+	private LNode current; //to keep track of where you are
+
+	//constructor:
+	public MyLinkedListIterator(MyLinkedList l){
+	    list = l;
+	    current = start;
+	}
+	
+	public Integer next(){
+	    if(hasNext()){
+		int holder = current.value;
+		current = current.next;
+
+		return holder;
+	    }
+	    else{
+		throw new NoSuchElementException();
+	    }
+	}
+
+	public boolean hasNext(){
+	    return current != null;
+	}
+
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}	
+    }
     
     //inner LNode class
     private class LNode{
