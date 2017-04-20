@@ -1,10 +1,11 @@
 public class UglySingleLinkedList{
      //instance vars
     private LNode start;
+    private LNode end; 
     private int size;
 
     //default constructor:
-    public MyLinkedList(){
+    public UglySingleLinkedList(){
 	//defaults to null for start, 0 for size
     }
 
@@ -188,22 +189,34 @@ public class UglySingleLinkedList{
 	
 	int holder = 0;
 
+	//removing only element of the list:
+	if(size() == 1){
+	    holder = start.value;
+	    
+	    start = null;
+	    end = null;
+
+	    size--;
+	    return holder;
+	}
+	
 	//removing 0th LNode:
 	if(index == 0){
 	    holder = start.value;
 	    
 	    start = start.next;
-
+	    start.prev = null;
+	    
 	    size--;
 	    return holder;
 	}
 
 	//removing last LNode:
 	if(index == size() - 1){
-	    holder = getNthNode(index).value;
-	    
-	    LNode secondToLast = getNthNode(index - 1);
-	    secondToLast.next = null;
+	    holder = end.value;
+
+	    end = end.prev;
+	    end.next = null;
 
 	    size--;
 	    return holder;
