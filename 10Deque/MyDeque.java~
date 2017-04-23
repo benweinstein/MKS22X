@@ -1,0 +1,10 @@
+public class MyDeque{
+    private String[] data;
+    private int back; //add to back
+    private int front; //remove from front
+    
+
+
+
+
+}
