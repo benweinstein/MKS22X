@@ -1,0 +1,28 @@
+public class MyHeap{
+    private int size;
+    private int minMaxConstant;//EITHER -1 or 1, ALWAYS
+
+    public MyHeap(){
+    
+    }
+
+    public MyHeap(boolean minMax){
+    
+    }
+
+    public String peek(){
+
+    }
+
+    public void remove(){
+
+    }
+
+    public void add(String s){
+
+    }
+
+    public static void main(String[] args){
+
+    }
+}
