@@ -32,7 +32,6 @@ public class MyHeap{
 	String holder = data.get(size);
 
 	data.set(1, data.remove(size));
-	System.out.println(this.toString()); //FOR TESTING
 
 	size--;
 	pushDown(1);
@@ -50,21 +49,30 @@ public class MyHeap{
     //NEED TO ADD BOOLEANS FOR IF THERE IS A RIGHT//LEFT CHILD. IN ORDER!!!
     private void pushDown(int index){
 	//base case
-	if(data.get(index).compareTo(getChildR(index)) * minMaxConstant >= 0 &&
-	   data.get(index).compareTo(getChildL(index)) * minMaxConstant >= 0){
+	if(childR(index) == -1 && childL(index) == -1){
 	    return;
 	}
-	//Remember: you go down whichever side is smaller
-	//if not, try to see if you can go down the left branch first
-	else if(getChildL(index).compareTo(getChildR(index)) * minMaxConstant <= 0){
-	    swap(index, index * 2); 
-	    pushDown(index * 2);
+
+	//other cases
+        if(childR(index) == -1){
+	    if(data.get(index).compareTo(data.get(childL(index))) * minMaxConstant < 0){
+		swap(index, childL(index));
+		pushDown(childL(index));	       
+	    }
+	    else{
+		return;
+	    }
 	}
-	//otherwise, go down the right side
+
+	//more:
+	else if(data.get(childL(index)).compareTo(data.get(childR(index))) * minMaxConstant >= 0){
+	    swap(index, childL(index));
+	    pushDown(childL(index));
+	}
 	else{
-	    swap(index, index * 2 + 1);
-	    pushDown(index * 2 + 1);
-	}   	    
+	    swap(index, childR(index));
+	    pushDown(childR(index));
+	}
     }
 
     private void pushUp(int index){
@@ -79,16 +87,24 @@ public class MyHeap{
 	swap(index, index / 2);
 	pushUp(index / 2);
     }
-    
-    //should these return Strings or ints (the indeces of the child//parent)???
-    private String getChildR(int index){
-	return data.get(index * 2 + 1);
+
+    //returns index of right child, -1 if nonexistent
+    private int childR(int index){
+	if(index * 2 + 1 > size){
+	    return -1;
+	}
+	return index * 2 + 1;
     }
 
-    private String getChildL(int index){
-	return data.get(index * 2);
+    //returns index of left child, -1 if nonexistent
+    private int childL(int index){
+	if(index * 2 > size){
+	    return -1;
+	}
+	return index * 2;
     }
 
+    //returns parent String
     private String getParent(int index){
 	return data.get(index / 2);
     }
@@ -115,5 +131,7 @@ public class MyHeap{
 	System.out.println(h); //bb, a, b
 
 	h.remove();
+	System.out.println(h.peek());
+	System.out.println(h.remove());
     }
 }
