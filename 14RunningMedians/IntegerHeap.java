@@ -8,7 +8,7 @@ public class IntegerHeap{
     public IntegerHeap(){
 	minMaxConstant = 1; //this is a maxHeap
 	data = new ArrayList<Integer>();
-	data.add(null);
+	data.add(null); //null bc will never be accessed
     }
 
     //if true: maxHeap; if false: minHeap
@@ -21,7 +21,12 @@ public class IntegerHeap{
 	}
 
 	data = new ArrayList<Integer>();
-	data.add(null);
+	data.add(null); //null bc will never be accessed
+    }
+
+    //in order to make RunningMedians much easier
+    public int size(){
+	return size;
     }
 
     public Integer peek(){
@@ -29,14 +34,22 @@ public class IntegerHeap{
     }
 
     public Integer remove(){
-	Integer holder = data.get(size);
+	//exception case:
+	if(size == 1){
+	    size--;
+	    return data.remove(1);
+	}
+	//any other case:
+	else{	
+	    Integer holder = data.get(size);
 
-	data.set(1, data.remove(size));
+	    data.set(1, data.remove(size));
+	    
+	    size--;
+	    pushDown(1);
 
-	size--;
-	pushDown(1);
-
-	return holder;
+	    return holder;
+	}
     }
 
     public void add(Integer n){
