@@ -41,7 +41,7 @@ public class IntegerHeap{
 	}
 	//any other case:
 	else{	
-	    Integer holder = data.get(size);
+	    Integer holder = data.get(1);
 
 	    data.set(1, data.remove(size));
 	    
