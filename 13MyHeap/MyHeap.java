@@ -29,15 +29,22 @@ public class MyHeap{
     }
 
     public String remove(){
-	String holder = data.get(size);
+	//CRUCIAL EXCEPTION CASE:
+	if(size == 1){
+	    size--;
+	    return data.remove(1);
+	}
+	//any other case:
+	else{	    
+	    String holder = data.get(size);
+	    
+	    data.set(1, data.remove(size));
 
-	data.set(1, data.remove(size));
-
-	size--;
-	pushDown(1);
-
-
-	return holder;
+	    size--;
+	    pushDown(1);
+	    
+	    return holder;
+	}
     }
 
     public void add(String s){
@@ -133,5 +140,7 @@ public class MyHeap{
 	h.remove();
 	System.out.println(h.peek());
 	System.out.println(h.remove());
+	h.remove();
+	System.out.println(h);
     }
 }
