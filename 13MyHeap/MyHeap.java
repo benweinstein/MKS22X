@@ -36,7 +36,7 @@ public class MyHeap{
 	}
 	//any other case:
 	else{	    
-	    String holder = data.get(size);
+	    String holder = data.get(1);
 	    
 	    data.set(1, data.remove(size));
 
