@@ -58,7 +58,9 @@ public class RunningMedian{
 	}
 	else{
 	    lt.add(n);
-	    System.out.println(this.lt);
+	    
+	    //more testing stuff:
+	    //System.out.println(this.lt);
 
 	    //check to make sure the sizes are right:
 	    if(lt.size() - gt.size() > 1){
@@ -89,6 +91,17 @@ public class RunningMedian{
 	System.out.println(m); //3.5
 	m.add(15);
 	System.out.println(m); //4.0
+	m.add(2);
+	m.add(5);
+	m.add(6);
+	m.add(7);
+	m.add(8);
+	m.add(14);
+	m.add(11);
+	m.add(10);
+	m.add(13);
+	m.add(9);
+	System.out.println(m); //8.0
     }
 }
 
