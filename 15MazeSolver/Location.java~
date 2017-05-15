@@ -1,0 +1,5 @@
+public class Location implements Comparable<Location>{
+    private int distToGoal; //stores reference to the goal
+    private boolean aStar; //when true, compareTo()  will use previousDistance
+                           //+ distanceToGoal. When false, compareTo() will use
+                           //distanceToGoal only
