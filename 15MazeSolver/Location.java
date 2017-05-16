@@ -25,16 +25,25 @@ public class Location implements Comparable<Location>{
     */
 
     //accessors as needed...
+    public int getDistToStart(){
+	return distToStart;
+    }
+
+    public int getDistToGoal(){
+	return distToGoal;
+    }
+
 
     //compareTo
     public int compareTo(Location other){
 	if(aStar){
-	    //use both
+	    int priority1 = getDistToGoal() + getDistToStart();
+	    int priority2 = other.getDistToGoal() + other.getDistToStart();
+	    return priority1 - priority2;
 	}
 	else{
-	    //only one
+	    return getDistToGoal() - other.getDistToGoal();
 	}
-	return 0;
     }
 
     public static void main(String[] args){
