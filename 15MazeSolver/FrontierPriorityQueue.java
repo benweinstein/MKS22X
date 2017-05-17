@@ -1,6 +1,7 @@
-public class FrontierPriorityQueue{
+public class FrontierPriorityQueue implements Frontier{
     private PriorityQueue locations;
 
+    //need booleans in constructors!!!!!!!!!!!!!!!!!!!!!!!!!
     public void add(Location l){
 	locations.add(l);
     }

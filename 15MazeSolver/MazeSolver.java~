@@ -1,0 +1,20 @@
+public class MazeSolver{
+    private Maze board;
+
+    public MazeSolver(String s){
+
+    }
+
+    public void solve(){
+
+    }
+
+    public void solve(int n){
+
+    }
+
+   
+
+
+
+}
