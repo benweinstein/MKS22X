@@ -25,6 +25,15 @@ public class Location implements Comparable<Location>{
     */
 
     //accessors as needed...
+
+    public int row(){
+	return row;
+    }
+
+    public int col(){
+	return col;
+    }
+
     public int getDistToStart(){
 	return distToStart;
     }
