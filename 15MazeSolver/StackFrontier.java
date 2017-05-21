@@ -1,7 +1,8 @@
 import java.util.Stack;
 
 public class StackFrontier implements Frontier{
-    private Stack<Location> data; 
+    private Stack<Location> data;
+    private int size;
 
     public StackFrontier(){
 	data = new Stack<Location>();
@@ -9,9 +10,15 @@ public class StackFrontier implements Frontier{
 
     public void add(Location l){
 	data.push(l);
+	size++;
     }
 
     public Location next(){
+	size--;
 	return data.pop();
+    }
+
+    public int size(){
+	return size;
     }
 }

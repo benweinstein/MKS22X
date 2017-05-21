@@ -12,12 +12,22 @@ public class Location implements Comparable<Location>{
       CONSTRUCTORS
     */
 
-    public Location(int r, int c, Location previous, int distToStart, int distToGoal){
-
+    public Location(int r, int c, Location prev, int toStart, int toGoal){
+	row = r;
+	col = c;
+	previous = prev;
+	distToStart = toStart;
+	distToGoal = toGoal;
+	aStar = false;	
     }
 
-    public Location(int r, int c, Location previous, int distToStart, int distToGoal, boolean aStar){
-
+    public Location(int r, int c, Location prev, int toStart, int toGoal, boolean aStar){
+	row = r;
+	col = c;
+	previous = prev;
+	distToStart = toStart;
+	distToGoal = toGoal;
+	this.aStar = aStar;
     }
 
     /*
@@ -42,10 +52,20 @@ public class Location implements Comparable<Location>{
 	return distToGoal;
     }
 
+    public boolean getAStar(){
+	return aStar;
+    }
 
+    public Location prev(){
+	return prev();
+    }
+
+    
     //compareTo
     public int compareTo(Location other){
-	if(aStar){
+	if(other.getAStar()){ //because of the start node having false
+	    //(SEE MAZE.JAVA ABOUT THAT)
+	    
 	    int priority1 = getDistToGoal() + getDistToStart();
 	    int priority2 = other.getDistToGoal() + other.getDistToStart();
 	    return priority1 - priority2;

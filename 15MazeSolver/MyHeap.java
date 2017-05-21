@@ -136,13 +136,5 @@ public class MyHeap{
 	data.set(k, holder);
     }
 
-    public static void main(String[] args){
-	MyHeap h = new MyHeap();
-	h.add(3);
-	h.add(5);
-	h.add(44);
-	h.remove();
-	System.out.println(h);
-    }
 }
 

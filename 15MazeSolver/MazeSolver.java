@@ -10,7 +10,7 @@ public class MazeSolver{
     
     public MazeSolver(String filename, boolean animate){
 	board = new Maze(filename);
-	//something with animate
+	//something with animate??? nah, nvm
     }
 
     public void solve(){
@@ -32,35 +32,65 @@ public class MazeSolver{
 	    front = new QueueFrontier();
 	}
 	if(style == 2){ //best-first search
-	    front = new PriorityQueueFrontier();
+	    front = new FrontierPriorityQueue();
 	}
 	if(style == 3){ //a-star 
-	    front = new PriorityQueueFrontier();
+	    front = new FrontierPriorityQueue();
 	    //gonna have to be separate though,,, for the creation of Locations
 	} 
 
 	//add start node to Frontier
 	front.add(board.getStart());
-	boolean firstTime = true;
+
+	Location current = null;
 	
 	//while NOT at end AND NOT empty
-	while((firstTime) || (!isAtEnd() && front.size() != 0)){
-	    firstTime = false;
-	
-	    //get next node:
-	    Location current = front.remove();
+	while(front.size() != 0){
+	    //get next node: 
+	    current = front.next();
+	    
+	    //wipe current off the frontier:
+	    board.set(current.row(), current.col(), '.');
+
+	    
+	    //if at end, end it 
+	    if(isAtEnd(current)){
+		return;
+	    }
+
+	    //otherwise...
 	
 	    //process that node:
+	    ArrayList<Location> ary = null;
 	    
-	    ArrayList<Location> ary = findNext(current, false); //not worrying
-	    //about astar right now -- just the first two (three?) options
+	    if(style == 3){ //for astar
+		ary = findNext(current, true);
+	    }
+	    else{
+		ary = findNext(current, false);
+	    }
 	    
-	    for(int i = 0; i < ary.length; i++){
+	    for(int i = 0; i < ary.size(); i++){
 		front.add(ary.get(i));
 	    }
+
 	}
+	
+	retracePath(current);
+	System.out.println(board.toString(13));
     }
-    
+
+    //helper method: 'Am I done?'
+    private boolean isAtEnd(Location current){
+	int endR = board.getEnd().row();
+	int endC = board.getEnd().col();
+
+	int r = current.row();
+	int c = current.col();
+
+	return endR == r && endC == c;
+    }
+	
     //helper method that figures out where the next frontier spots are
     private ArrayList<Location> findNext(Location l, boolean astar){
 	ArrayList<Location> ans = new ArrayList<Location>();
@@ -72,19 +102,76 @@ public class MazeSolver{
 	};
 	
 	for(int i = 0; i < 4; i++){
-	    if(board.get(l.row() + possiblePaths[i][0],
-			 l.col() + possiblePaths[i][1]) == ' '){
+	    int newR = l.row() + possiblePaths[i][0];
+	    int newC = l.col() + possiblePaths[i][1];
+	    
+	    if(board.get(newR, newC) == ' '){
 		//add the new location to ans
+		if(astar){ //astar version
+		    ans.add(new Location(newR, newC, l,
+					 fromStart(newR, newC),
+					 toEnd(newR, newC), true));
+		}			    				  
+		else{
+		    ans.add(new Location(newR, newC, l,
+					 fromStart(newR, newC),
+					 toEnd(newR, newC)));
+		}
+		//set to frontier:
+		board.set(newR, newC, '?');
+		
+		System.out.println(board.toString(13));
 	    }
+
 	}
+
+	return ans;
+    }
+
+    //helper methods for calculating Manhattan distances:
+
+    //for best-first and aStar:
+    private int fromStart(int r, int c){
+	int startR = board.getStart().row();
+	int startC = board.getStart().col();
+
+	return Math.abs(r - startR) + Math.abs(c - startC);
+    }
+
+    //for aStar:
+    private int toEnd(int r, int c){
+	int endR = board.getEnd().row();
+	int endC = board.getEnd().col();
+	
+	return Math.abs(r - endR) + Math.abs(c - endC);
+    }
+
+    //to retrace your path once you're done solving the maze
+    private void retracePath(Location l){
+	if(l.prev() == null){
+	    board.set(l.row(), l.col(), '@');
+	    return;
+	}
+	//otherwise...
+	board.set(l.row(), l.col(), '@');
+	System.out.println(board.toString(13));
+	retracePath(l.prev());
     }
     
-    public void toString(){
-	return board;
+
+    
+    //toString()
+    public String toString(){
+	return board.toString();
     }
     
     public static void main(String[] args){
-	System.out.println("Hi");
+	String f = args[0];
+	MazeSolver m = new MazeSolver(f);
+
+	int solveStyle = Integer.parseInt(args[1]);
+	m.solve(solveStyle);
+	m.toString();
     }
 
 
