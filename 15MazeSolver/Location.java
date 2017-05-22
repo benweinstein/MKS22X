@@ -57,7 +57,7 @@ public class Location implements Comparable<Location>{
     }
 
     public Location prev(){
-	return prev();
+	return previous;
     }
 
     

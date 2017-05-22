@@ -55,6 +55,8 @@ public class MazeSolver{
 	    
 	    //if at end, end it 
 	    if(isAtEnd(current)){
+		retracePath(current, true);
+		System.out.println(board.toString(13));
 		return;
 	    }
 
@@ -75,9 +77,6 @@ public class MazeSolver{
 	    }
 
 	}
-	
-	retracePath(current);
-	System.out.println(board.toString(13));
     }
 
     //helper method: 'Am I done?'
@@ -147,17 +146,24 @@ public class MazeSolver{
     }
 
     //to retrace your path once you're done solving the maze
-    private void retracePath(Location l){
-	if(l.prev() == null){
-	    board.set(l.row(), l.col(), '@');
+    private void retracePath(Location l, boolean firstTime){
+	//set the end to 'E'
+	if(firstTime){
+	    board.set(l.row(), l.col(), 'E');
+	    System.out.println(board.toString(13));
+	    retracePath(l.prev(), false);
+	}
+	else if(l.prev() == null){
+	    board.set(l.row(), l.col(), 'S');
+	    System.out.println(board.toString(13));
 	    return;
 	}
-	//otherwise...
-	board.set(l.row(), l.col(), '@');
-	System.out.println(board.toString(13));
-	retracePath(l.prev());
+	else{
+	    board.set(l.row(), l.col(), '@');
+	    System.out.println(board.toString(13));
+	    retracePath(l.prev(), false);
+	}
     }
-    
 
     
     //toString()
