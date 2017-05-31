@@ -39,12 +39,12 @@ public class StackCalc{
     }
 
     private static boolean isOperator(String s){
-	char a = s.charAt(0);
-	return (a == '+' ||
-		a == '-' ||
-		a == '*' ||
-		a == '/' ||
-		a == '%');
+	//THIS IS THE MISTAKE!!! NEEDS .equals() 
+	return (s.equals("+") ||
+		s.equals("-") ||
+		s.equals("*") ||
+		s.equals("/") ||
+		s.equals("%"));
     }
 
     public static void main(String[] args){
