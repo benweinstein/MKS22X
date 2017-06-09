@@ -3,14 +3,15 @@ import java.util.ArrayList;
 public class MazeSolver{
     private Maze board;
     private Frontier front;
-
+    private boolean animate;
+    
     public MazeSolver(String filename){
 	this(filename, false);
     }
     
     public MazeSolver(String filename, boolean animate){
 	board = new Maze(filename);
-	//something with animate??? nah, nvm
+	this.animate = animate;
     }
 
     public void solve(){
@@ -56,7 +57,7 @@ public class MazeSolver{
 	    //if at end, end it 
 	    if(isAtEnd(current)){
 		retracePath(current, true);
-		System.out.println(board.toString(13));
+		if(animate) System.out.println(board.toString(13));
 		return;
 	    }
 
@@ -119,7 +120,7 @@ public class MazeSolver{
 		//set to frontier:
 		board.set(newR, newC, '?');
 		
-		System.out.println(board.toString(13));
+		if(animate) System.out.println(board.toString(13));
 	    }
 
 	}
@@ -150,21 +151,25 @@ public class MazeSolver{
 	//set the end to 'E'
 	if(firstTime){
 	    board.set(l.row(), l.col(), 'E');
-	    System.out.println(board.toString(13));
+	    if(animate) System.out.println(board.toString(13));
 	    retracePath(l.prev(), false);
 	}
 	else if(l.prev() == null){
 	    board.set(l.row(), l.col(), 'S');
-	    System.out.println(board.toString(13));
+	    if(animate) System.out.println(board.toString(13));
 	    return;
 	}
 	else{
 	    board.set(l.row(), l.col(), '@');
-	    System.out.println(board.toString(13));
+	    if(animate) System.out.println(board.toString(13));
 	    retracePath(l.prev(), false);
 	}
     }
 
+    //toString(int)
+    public String toString(int n){
+	return board.toString(13);
+    }
     
     //toString()
     public String toString(){
@@ -173,11 +178,11 @@ public class MazeSolver{
     
     public static void main(String[] args){
 	String f = args[0];
-	MazeSolver m = new MazeSolver(f);
+	MazeSolver m = new MazeSolver(f, false);
 
 	int solveStyle = Integer.parseInt(args[1]);
 	m.solve(solveStyle);
-	m.toString();
+	System.out.println(m);
     }
 
 
